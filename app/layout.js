@@ -1,8 +1,10 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Searchbar from "@/components/search";
+import Header from "@/components/header/header";
 
-const inter = Inter();
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Blaze",
@@ -12,7 +14,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>{children}</body>
+      <body
+        className={`${inter.className}  flex flex-col items-center h-screen`}
+      >
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
