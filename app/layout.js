@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
         <Header />
         <main className="h-screen w-screen flex md:justify-center">
           <Nav />
-          <section className="max-h-screen md:w-1/4 overflow-y-auto flex">
+          <section className="max-h-screen md:w-1/3 overflow-y-auto flex">
             {children}
           </section>
         </main>
