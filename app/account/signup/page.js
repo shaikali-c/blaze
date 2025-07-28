@@ -1,98 +1,182 @@
 "use client";
 
-import Input from "@/components/forms/input";
-import { LoaderCircle, TriangleAlert } from "lucide-react";
-import Link from "next/link";
-import { useState, useRef } from "react";
-export default function Account() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+import { useId, useMemo, useState } from "react";
 
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const confirmPasswordRef = useRef(null);
+import { SparklesIcon } from "lucide-react";
 
-  const validate = () => {
-    const email = emailRef.current?.value.trim();
-    const password = passwordRef.current?.value;
-    const confirmPassword = confirmPasswordRef.current?.value;
+import { Button } from "@/components/ui/button";
 
-    if (!email || !email.includes("@")) return "Invalid email.";
-    if (!password) return "Password cannot be empty.";
-    if (password.length < 8) return "Password must be at least 8 characters.";
-    if (password !== confirmPassword) return "Passwords do not match.";
+import {
+  CheckIcon,
+  EyeIcon,
+  EyeOffIcon,
+  XIcon,
+  AtSignIcon,
+} from "lucide-react";
 
-    return "";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+export default function Signup() {
+  const id = useId();
+  const [password, setPassword] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVisibility = () => setIsVisible((prevState) => !prevState);
+
+  const checkStrength = (pass) => {
+    const requirements = [
+      { regex: /.{8,}/, text: "At least 8 characters" },
+      { regex: /[0-9]/, text: "At least 1 number" },
+      { regex: /[a-z]/, text: "At least 1 lowercase letter" },
+      { regex: /[A-Z]/, text: "At least 1 uppercase letter" },
+    ];
+
+    return requirements.map((req) => ({
+      met: req.regex.test(pass),
+      text: req.text,
+    }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validation = validate();
-    if (validation) {
-      return setError(validation);
-    }
-    setError(false);
+  const strength = checkStrength(password);
+
+  const strengthScore = useMemo(() => {
+    return strength.filter((req) => req.met).length;
+  }, [strength]);
+
+  const getStrengthColor = (score) => {
+    if (score === 0) return "bg-border";
+    if (score <= 1) return "bg-red-500";
+    if (score <= 2) return "bg-orange-500";
+    if (score === 3) return "bg-amber-500";
+    return "bg-emerald-500";
+  };
+
+  const getStrengthText = (score) => {
+    if (score === 0) return "Enter a password";
+    if (score <= 2) return "Weak password";
+    if (score === 3) return "Medium password";
+    return "Strong password";
   };
 
   return (
-    <section className="h-screen w-screen flex items-center justify-center p-5">
-      <form
-        className=" bg-neutral-900 w-full max-w-120 rounded-2xl overflow-hidden"
-        onSubmit={(e) => handleSubmit(e)}
-      >
-        <header className="p-7 pb-5 flex flex-col gap-1">
-          <h2 className="text-xl text-neutral-100">Create an account</h2>
-          <p className="text-neutral-500 text-xm">
-            Double-check your details, payments will be sent to authorized users
-            only.
-          </p>
-        </header>
-        <main className="p-5 pt-0">
-          <Input
-            type={"text"}
-            placeholder={"Enter your email"}
-            reference={emailRef}
-          />
-          <Input
-            type={"password"}
-            placeholder={"Enter your new password"}
-            reference={passwordRef}
-          />
-          <Input
-            type={"password"}
-            placeholder={"Enter your password again"}
-            reference={confirmPasswordRef}
-          />
+    <section className="bg-neutral-950 h-screen w-screen flex items-center justify-center p-7 max-w-150">
+      <form className="border-2 bg-neutral-950 border-neutral-800 p-10 rounded-2xl">
+        <header>
+          <h2 className="text-xl">Create an account</h2>
 
-          {error && (
-            <p className="p-5 pl-0 pb-0 text-red-500 flex items-center gap-2">
-              <TriangleAlert size={17} />
-              {error}
-            </p>
-          )}
-          <p className="pt-5 pb-5 flex gap-1.5 items-baseline-start text-neutral-300">
-            Already have an account?{" "}
-            <Link href={"/account/login"} className="underline text-sky-600">
-              Login
-            </Link>
-          </p>
-          <div className="flex justify-center">
-            <button
-              className={`py-2 px-5 bg-neutral-200 text-neutral-900 rounded-xl mb-2 w-full cursor-pointer ${
-                loading ? "opacity-50" : ""
-              }`}
-              onClick={handleSubmit}
-            >
-              {!loading && "Create"}
-              {loading && (
-                <p className="flex items-center gap-2 justify-center">
-                  <LoaderCircle size={15} className="animate-spin" /> Please
-                  wait
-                </p>
-              )}
-            </button>
+          {/* Email Input */}
+          <div className="*:not-first:mt-2">
+            <Label htmlFor={id}>Enter your email address</Label>
+            <div className="relative">
+              <Input
+                id={id}
+                className="peer ps-9"
+                placeholder="Email"
+                type="email"
+              />
+              <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
+                <AtSignIcon size={16} aria-hidden="true" />
+              </div>
+            </div>
           </div>
-        </main>
+
+          {/* Password Input */}
+          <div className="*:not-first:mt-2 mt-6">
+            <Label htmlFor={`${id}-password`}>Enter your password</Label>
+            <div className="relative">
+              <Input
+                id={`${id}-password`}
+                className="pe-9"
+                placeholder="Password"
+                type={isVisible ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                aria-describedby={`${id}-description`}
+              />
+              <button
+                className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                type="button"
+                onClick={toggleVisibility}
+                aria-label={isVisible ? "Hide password" : "Show password"}
+                aria-pressed={isVisible}
+                aria-controls="password"
+              >
+                {isVisible ? (
+                  <EyeOffIcon size={16} aria-hidden="true" />
+                ) : (
+                  <EyeIcon size={16} aria-hidden="true" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Strength Bar */}
+          <div
+            className="bg-border mt-3 mb-4 h-1 w-full overflow-hidden rounded-full"
+            role="progressbar"
+            aria-valuenow={strengthScore}
+            aria-valuemin={0}
+            aria-valuemax={4}
+            aria-label="Password strength"
+          >
+            <div
+              className={`h-full ${getStrengthColor(
+                strengthScore
+              )} transition-all duration-500 ease-out`}
+              style={{ width: `${(strengthScore / 4) * 100}%` }}
+            ></div>
+          </div>
+
+          {/* Strength Text */}
+          <p
+            id={`${id}-description`}
+            className="text-foreground mb-2 text-sm font-medium"
+          >
+            {getStrengthText(strengthScore)}. Must contain:
+          </p>
+
+          {/* Requirements List */}
+          <ul className="space-y-1.5" aria-label="Password requirements">
+            {strength.map((req, index) => (
+              <li key={index} className="flex items-center gap-2">
+                {req.met ? (
+                  <CheckIcon
+                    size={16}
+                    className="text-emerald-500"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <XIcon
+                    size={16}
+                    className="text-muted-foreground/80"
+                    aria-hidden="true"
+                  />
+                )}
+                <span
+                  className={`text-xs ${
+                    req.met ? "text-emerald-600" : "text-muted-foreground"
+                  }`}
+                >
+                  {req.text}
+                  <span className="sr-only">
+                    {req.met ? " - Requirement met" : " - Requirement not met"}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5 w-full justify-center flex">
+            <Button variant="outline" className={"cursor-pointer"}>
+              Create
+              <SparklesIcon
+                className="-me-1 opacity-60"
+                size={16}
+                aria-hidden="true"
+              />
+            </Button>
+          </div>
+        </header>
       </form>
     </section>
   );

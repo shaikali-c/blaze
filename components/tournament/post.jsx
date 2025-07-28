@@ -7,7 +7,7 @@ import Button from "./button";
 
 export default function Post({ data }) {
   return (
-    <div className="w-full border-b-2 max-w-120 border-neutral-800 bg-neutral-950 ">
+    <div className="w-full border-b-2 max-w-120 border-neutral-800 bg-neutral-950 md:border-l-2 md:border-r-2">
       <header className="p-5 flex justify-between">
         <div className="flex items-center gap-2">
           <Image
@@ -40,6 +40,7 @@ export default function Post({ data }) {
               <Tag text={elem} key={elem} />
             ))}
           </div>
+
           <h2 className="flex gap-1.5 text-neutral-400">
             <UsersRound size={20} fill="#a1a1a1" />
             {data.joined}/{data.max_members}
@@ -54,7 +55,7 @@ export default function Post({ data }) {
           <div className="flex justify-between items-center p-5 pl-0  pb-0 flex-wrap">
             <div className=" flex text-neutral-300 items-center">
               <DollarSign color="#006fff" size={15} />
-              <h2>{data.prize}.0</h2>
+              <h2>{data.prize}.00</h2>
             </div>
             <Button active={data.joined < data.max_members} />
           </div>
