@@ -15,7 +15,7 @@ export default function Component() {
         {steps.map((step) => (
           <StepperItem key={step} step={step} className="not-last:flex-1">
             <StepperTrigger>
-              <StepperIndicator asChild>{step}</StepperIndicator>
+              <StepperIndicator />
             </StepperTrigger>
             {step < steps.length && <StepperSeparator />}
           </StepperItem>
@@ -25,7 +25,7 @@ export default function Component() {
         className="text-muted-foreground mt-2 text-xs"
         role="region"
         aria-live="polite">
-        Stepper with numbers only
+        Stepper with numbers and checkmarks
       </p>
     </div>
   );
