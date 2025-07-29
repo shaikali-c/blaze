@@ -21,14 +21,15 @@ export default function FormInput({
   });
 
   const handleNextClick = () => {
-    const value = inputRef.current.value;
+    let value = inputRef.current.value;
     const currentField = formFields[step_].name;
 
-    if (!value)
+    if (!value) {
       return setError({
         active: true,
         err: formFields[step_].err,
       });
+    }
 
     setError({ active: false, err: "" });
 

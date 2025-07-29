@@ -75,7 +75,7 @@ const navItems = [
     heading: "Settings",
     items: [
       {
-        url: "/account",
+        url: "/account/signup",
         text: "Profile",
       },
       {
@@ -87,7 +87,7 @@ const navItems = [
         text: "Privacy",
       },
       {
-        url: "/logout",
+        url: "/account/login",
         text: "Logout",
       },
     ],
@@ -96,7 +96,7 @@ const navItems = [
 
 export default function Nav() {
   return (
-    <nav className="pr-10 pt-10 text-left w-1/6 hidden md:block border-r-2 border-neutral-800">
+    <nav className="pr-10 pt-15 text-left w-1/6 hidden md:block border-r-2 border-neutral-800">
       {navItems.map((elem, id) => {
         return (
           <div key={id}>

@@ -8,8 +8,6 @@ import {
   StepperSeparator,
   StepperTrigger,
 } from "@/components/ui/stepper";
-import { ArrowUpRight, CircleArrowOutUpRight } from "lucide-react";
-import Link from "next/link";
 
 import { useState } from "react";
 

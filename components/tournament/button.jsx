@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 export default function Button({ active }) {
   const baseClasses =
-    "p-2 rounded text-xs px-5 flex items-center gap-1 select-none";
+    "p-2 rounded text-xs px-5 flex items-center gap-1 select-none ml-auto w-fit";
   const activeClasses =
     "bg-neutral-200 text-neutral-950 hover:underline cursor-pointer";
   const inactiveClasses = "bg-neutral-700 text-neutral-200";

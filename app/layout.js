@@ -17,9 +17,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${inter.className}  flex flex-col h-screen`}>
         <Header />
-        <main className="h-screen w-screen flex md:justify-center">
+        <main className="h-screen w-screen flex md:justify-center mt-8">
           <Nav />
-          <section className="max-h-screen md:w-1/3 overflow-y-auto flex">
+          <section className="md:max-h-screen md:w-1/3 md:overflow-y-auto flex mt-8">
             {children}
           </section>
         </main>

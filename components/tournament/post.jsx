@@ -1,5 +1,11 @@
 import FreeFireIcon from "@/public/icons/freefire.png";
-import { Clock, DollarSign, Ellipsis, Trophy, UsersRound } from "lucide-react";
+import {
+  Badge,
+  BadgeDollarSign,
+  Clock,
+  Ellipsis,
+  UsersRound,
+} from "lucide-react";
 
 import Image from "next/image";
 import Tag from "./tag";
@@ -7,7 +13,7 @@ import Button from "./button";
 
 export default function Post({ data }) {
   return (
-    <div className="w-full border-b-2 max-w-120 border-neutral-800 bg-neutral-950 md:border-r-2">
+    <div className="w-full border-b-2 border-neutral-800 bg-neutral-950 md:border-r-2">
       <header className="p-5 flex justify-between">
         <div className="flex items-center gap-2">
           <Image
@@ -23,7 +29,7 @@ export default function Post({ data }) {
       </header>
       <section>
         <div className="p-5 pt-0">
-          <div className="w-full h-50 bg-neutral-800 rounded-xl relative overflow-hidden">
+          <div className="w-full h-70 bg-neutral-800 rounded-xl relative overflow-hidden">
             <Image
               src={data.image_url}
               alt="Tournament Image"
@@ -46,19 +52,20 @@ export default function Post({ data }) {
             {data.joined}/{data.max_members}
           </h2>
         </main>
-        <p className="pt-0 p-5 pb-1.5 text-neutral-500 flex items-center gap-1.5">
-          <Clock size={15} />
-          {data.time}
-        </p>
+        <div className="flex pb-2 pr-5">
+          <p className="pt-0 p-5 pb-0 text-neutral-400 flex items-center gap-1.5">
+            <Clock size={15} />
+            {data.time}
+          </p>
+          <h2 className="flex items-center gap-1 text-neutral-400">
+            <BadgeDollarSign size={15} />
+            {data.prize}.00
+          </h2>
+        </div>
+
         <main className="p-5 pt-0">
-          <h2 className=" text-neutral-300">{data.description}</h2>
-          <div className="flex justify-between items-center p-5 pl-0  pb-0 flex-wrap ">
-            <div className=" flex text-neutral-300 items-center">
-              <DollarSign color="#006fff" size={15} />
-              <h2>{data.prize}.00</h2>
-            </div>
-            <Button active={data.joined < data.max_members} />
-          </div>
+          <h2 className=" text-neutral-300 pb-5">{data.description}</h2>
+          <Button active={data.joined < data.max_members} />
         </main>
       </section>
     </div>

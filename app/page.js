@@ -5,11 +5,11 @@ const dummy_data = [
     image_url:
       "https://thebridge.in/wp-content/uploads/2020/09/Free-Fire-feature-image-e1610258666449.jpg",
     tags: ["Free", "Clash Sqaud"],
-    time: "20/5 10:00 PM",
+    time: "May 5 10:00 PM",
     description:
       "Join the ultimate 12-round Free Fire Clash Squad tournament! Battle it out in fast-paced matches, showcase your squad's skills, and climb to the top. Only the best will survive!",
-    prize: 300.0,
-    joined: 64,
+    prize: 2500.0,
+    joined: 60,
     max_members: 64,
   },
   {
@@ -19,7 +19,7 @@ const dummy_data = [
     time: "20/5 10:00 PM",
     description:
       "Join the ultimate 12-round Free Fire Clash Squad tournament! Battle it out in fast-paced matches, showcase your squad's skills, and climb to the top. Only the best will survive!",
-    prize: 300.0,
+    prize: 2500.0,
     joined: Math.floor(Math.random() * 64),
     max_members: 64,
   },
@@ -30,7 +30,7 @@ const dummy_data = [
     time: "20/5 10:00 PM",
     description:
       "Join the ultimate 12-round Free Fire Clash Squad tournament! Battle it out in fast-paced matches, showcase your squad's skills, and climb to the top. Only the best will survive!",
-    prize: 300.0,
+    prize: 1000,
     joined: Math.floor(Math.random() * 64),
     max_members: 64,
   },
@@ -41,7 +41,7 @@ const dummy_data = [
     time: "20/5 10:00 PM",
     description:
       "Join the ultimate 12-round Free Fire Clash Squad tournament! Battle it out in fast-paced matches, showcase your squad's skills, and climb to the top. Only the best will survive!",
-    prize: 300.0,
+    prize: 500,
     joined: Math.floor(Math.random() * 64),
     max_members: 64,
   },
